@@ -28,7 +28,7 @@ setwd("D:\\[4] OKUL GENEL\\ASTGTMV003_N40E027")
 
 library(raster)
 raster <- raster("ASTGTMV003_N40E027_dem.tif") #read our raster with raster function
-raster <- aggregate(raster, fact = 2) #to resample raster because ı want it to work faster
+raster <- aggregate(raster, fact = 8) #to resample raster because ı want it to work faster
 
 plot(raster)
 #again we're going to create more customised plot with ggplot2 library
@@ -38,13 +38,12 @@ library(ggplot2)
 dataFrame <- as.data.frame(raster, xy=T)
 ggplot()+
   geom_tile(data = dataFrame, aes(x = x, y=y, fill=ASTGTMV003_N40E027_dem ))+
+  scale_fill_gradientn(colors = terrain.colors(10))+
   theme_bw()
 
 #now lets do some geoprocessing.
-#to calculate slope with our DEM values, we use terrain function  
+#to calculate slope with our DEM values, we use terrain function
 
-slopez <- terrain(data=raster, opt="slope", units="degrees")
-slope_df <- as.data.frame(slopez, xy = T)
-ggplot()+
-  geom_tile(data = slope_df, aes(x = x, y=y, fill=slope ))+
-  theme_bw()
+
+
+
